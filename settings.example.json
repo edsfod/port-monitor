@@ -1,0 +1,10 @@
+{
+  "_说明": "复制为设置目录里的 settings.json（%APPDATA%\\port-monitor\\settings.json；便携模式下是工具目录），只留要用的键。文件不在时：带 web-kit 外壳的网页工具照样认得出、能停止，只是没有追加的说明。各键的意思见 README「可迁移」。",
+  "tool_dirs": ["C:/Users/<你>/tools"],
+  "known_ports": {
+    "5432": [{"proto": "tcp", "procs": ["postgres.exe"], "text": "PostgreSQL 数据库", "note": "只在本机回环上监听时正常"}]
+  },
+  "known_apps": {
+    "postgres.exe": {"what": "PostgreSQL 数据库服务", "note": "自己装的数据库", "ports": {"5432": "默认端口"}}
+  }
+}
