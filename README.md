@@ -1,7 +1,7 @@
 # port-monitor —— 本机监听端口一览，并停止自己的后台工具
 
 > 创建/重写：2026-09-24
-> 边界：只记本工具的用法、说明来源与设计。各端口对应的系统组件本身不记；网页的配色、显示设置与服务外壳见本目录 `web-kit/`（[web-kit](https://github.com/edsfod/web-kit) 的副本，版本见 `vendor.json`）。
+> 边界：只记本工具的用法、说明来源与设计。各端口对应的系统组件本身不记；网页的配色、显示设置与服务外壳见本目录 `web-kit/`（web-kit 原是一个独立的项目，2026-10-12 停止维护，线上仓库已删除；这份 v1.0.0 的副本现在是本工具自己的一部分，来历见 `vendor.json`）。
 > 仓库：https://github.com/edsfod/port-monitor 。许可证：MIT（见 `LICENSE`）。
 > 失效判据：Windows PowerShell 的 `Get-NetTCPConnection` / `Get-NetUDPEndpoint` / CIM 进程与服务查询不再可用，或自建的网页工具不再用 web-kit 外壳（「自己的工具」的主要识别方式失效）时，本篇相应部分失效。
 
@@ -60,7 +60,7 @@ pythonw port_monitor.py --port 8767 --stop
 | 暖炭 | 深 | `aoe2_balance\v5\app\tokens.css` 深色 | 暖近黑，珊瑚强调 |
 | 象牙 | 浅 | `aoe2_balance\v5\app\tokens.css` 浅色 | 暖米白，墨字，珊瑚强调 |
 
-v5 的取值怎么映射到变量名见 web-kit 的 README 与 `schemes.json`。
+v5 的取值怎么映射到变量名见本目录 `web-kit/README.md` 与 `web-kit/schemes.json`。
 
 同日曾先后试过照 v5 的整套页面样式（页头、表格、个性化面板）做，使用者比较后定为 clash-review 的页面样式，v5 只取配色。
 
@@ -131,7 +131,7 @@ v5 的取值怎么映射到变量名见 web-kit 的 README 与 `schemes.json`。
 | `port_monitor.py` | 采集、判断与业务接口（`/api/ports`、`/api/stop`、`/api/elevate`）；服务外壳（后台运行日志、失败对话框、单实例、`--stop`、空闲退出、Host / 自定义头 / Origin 校验、`/api/prefs`、`/api/display`、`/api/ping`、`/api/shutdown`、`/kit/*`）来自 `web-kit/webkit.py`；不在源码目录生成 `__pycache__` |
 | `web/index.html` / `web/app.css` / `web/app.js` | 单页面（无构建步骤），只写页面内容与样式；配色与显示设置来自 web-kit，见第一节「界面样式与配色」 |
 | `port-monitor.bat` | 用 `web-kit\find-python.ps1` 找到 `pythonw`，在后台启动并立即返回（纯 ASCII），参数原样传给脚本 |
-| `web-kit/` | 网页外壳，[web-kit](https://github.com/edsfod/web-kit) 某个版本的完整副本，不在这里改 |
+| `web-kit/` | 网页外壳。web-kit v1.0.0 的完整副本，现在是本工具自己的一部分（web-kit 原是一个独立的项目，2026-10-12 停止维护，线上仓库已删除） |
 | `vendor.json` | 副本的来历：来源网址、标签、提交、tree 哈希（SWHID 格式）。核对与更新见「可迁移」 |
 | `settings.example.json` | 设置的格式样例。本机的设置在 `settings.json`（不随工具给别人） |
 
@@ -170,11 +170,9 @@ v5 的取值怎么映射到变量名见 web-kit 的 README 与 `schemes.json`。
 
 整目录拷到别处单独运行已试过（2026-09-24，去掉 `var/` 与 `settings.json`）：bat 找到解释器、服务起得来、`/kit/*` 从自己的副本送出、认得出 clash-review 与自己、`--stop` 正常。
 
-副本 `web-kit/` 只和线上的 web-kit 比，不引用任何本地工作目录：
+副本 `web-kit/` 不引用任何本地工作目录。web-kit 原是一个独立的项目，2026-10-12 停止维护，线上仓库已删除，所以它不再有新版，也不再更新；`vendor.json` 里的 `source` 只作来历的记录：
 
 - 核对副本没被改过：`git rev-parse HEAD:web-kit` 应等于 `vendor.json` 里 `tree` 的哈希部分，`git status web-kit` 应无改动。
-- 查新版：`git ls-remote --tags https://github.com/edsfod/web-kit.git`。
-- 更新：`git clone --depth 1 --branch <标签> https://github.com/edsfod/web-kit.git` 到临时目录，删掉其中的 `.git/`，整个替换 `web-kit/`，改 `vendor.json`，重启服务。
 - 个人文件不进仓库（`.gitignore`）：`settings.json`、`var/`、`portable`。平常它们也不在程序目录里（见第四节「设置与数据放在哪」）。
 - 发布：打 `v*` 标签时 GitHub Actions（`.github/workflows/release.yml`）用 `web-kit/pack.py` 打成带免安装版 Python 的 zip 挂到 Releases；只在公开项目里运行。
 
@@ -193,4 +191,5 @@ v5 的取值怎么映射到变量名见 web-kit 的 README 与 `schemes.json`。
 
 ## 修订记录
 
+- 2026-10-12：web-kit（原是一个独立的项目）停止维护，线上仓库已删除。本篇里指向那个仓库的链接、查新版和更新副本的两条命令去掉；`web-kit/` 这份副本原样留着，当作本工具自己的一部分。程序没有改。
 - 2026-09-24（v1.0.0）：首次公开发布。此前在作者的私有工作区里开发，历史不随公开仓库发布。
